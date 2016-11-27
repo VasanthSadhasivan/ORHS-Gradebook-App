@@ -75,12 +75,12 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
                     try {
                         x = Float.valueOf(a.getAllElements().get(11).text());
                         y = Float.valueOf(a.getAllElements().get(13).text());
-                        if(a.getAllElements().get(25).text().contains("y"))
+                        if(a.getAllElements().get(25).text().contains("y") || a.getAllElements().get(25).text().contains("Y"))
                             isGraded = true;
                     } catch (Exception e) {
                         x = 0;
                         y = 0;
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                     DataStorageAndParsing.classesAsArrayList.get(i).addAssignment(a.getAllElements().get(4).text(), x, y, x / y, isGraded);
                 }

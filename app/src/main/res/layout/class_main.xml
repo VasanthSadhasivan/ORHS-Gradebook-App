@@ -15,7 +15,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    android:baselineAligned="false"
     tools:context="com.vasanth.dev.aeriesorhs.activities.ClassActivity"
     android:id="@+id/main_assignment_layout">
 
@@ -26,11 +25,10 @@
             android:id="@+id/ClassTitle"
             android:textSize="40dp"
             android:textColor="@android:color/white" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView2"
-        android:layout_gravity="center_horizontal"
-        android:fillViewport="false" />
+
+        <ListView android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/assignmentListView">
+        </ListView>
 </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
