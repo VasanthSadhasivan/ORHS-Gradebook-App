@@ -1,0 +1,48 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    >
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/assignmentName"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:text="ahasidsdsdsdsdd"
+        android:layout_gravity="center"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/assignmentOutOf"
+        android:layout_width="0dp"
+        android:layout_weight="1.5"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:text="ahasidsdsdsdsdd"
+        android:layout_gravity="center"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/assignmentPercentage"
+        android:layout_width="0dp"
+        android:layout_weight="1.5"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:text="ahasidsdsdsdsdd"
+        android:layout_gravity="center"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/assignmentIsGraded"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:text="ahasidsdsdsdsdd"
+        android:layout_gravity="center"/>
+</LinearLayout>
