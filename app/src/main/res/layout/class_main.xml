@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.vasanth.dev.aeriesorhs.MainActivity">
+    tools:context="com.vasanth.dev.aeriesorhs.activities.MainActivity">
 
 
 
@@ -16,7 +16,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/black"
     android:baselineAligned="false"
-    tools:context="com.vasanth.dev.aeriesorhs.ClassActivity"
+    tools:context="com.vasanth.dev.aeriesorhs.activities.ClassActivity"
     android:id="@+id/main_assignment_layout">
 
         <TextView
