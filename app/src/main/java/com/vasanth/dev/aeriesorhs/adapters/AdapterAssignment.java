@@ -3,12 +3,14 @@ package com.vasanth.dev.aeriesorhs.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.vasanth.dev.aeriesorhs.R;
@@ -58,8 +60,8 @@ public class AdapterAssignment extends BaseAdapter {
         public TextView outOf;
         public TextView percentage;
         public TextView graded;
-        public Button add;
-        public Button subtract;
+        public ImageButton add;
+        public ImageButton subtract;
 
     }
 
@@ -72,8 +74,8 @@ public class AdapterAssignment extends BaseAdapter {
             holder.outOf = (TextView) convertView.findViewById(R.id.assignmentOutOf);
             holder.percentage = (TextView) convertView.findViewById(R.id.assignmentPercentage);
             holder.graded = (TextView) convertView.findViewById(R.id.assignmentIsGraded);
-            holder.add = (Button) convertView.findViewById(R.id.addButton);
-            holder.subtract = (Button) convertView.findViewById(R.id.subtractButton);
+            holder.add = (ImageButton) convertView.findViewById(R.id.addButton);
+            holder.subtract = (ImageButton) convertView.findViewById(R.id.subtractButton);
 
             convertView.setTag(holder);
         } else {

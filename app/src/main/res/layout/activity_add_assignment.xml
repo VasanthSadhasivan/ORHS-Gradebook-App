@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_assignment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.vasanth.dev.aeriesorhs.activities.AddAssignmentActivity">
+
+    <EditText
+        android:id="@+id/assignmentEditTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Name of New Assignment"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <EditText
+        android:id="@+id/assignmentWhatIGot"
+        android:hint="200"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/assignmentEditTextName"/>
+    <EditText
+        android:id="@+id/assignmentTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="200"
+        android:layout_below="@+id/assignmentWhatIGot"/>
+    <Button
+        android:id="@+id/addAssignmentConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_below="@+id/assignmentTotal"
+        android:onClick="addAssignmentConfirm"/>
+
+    <Spinner
+        android:id="@+id/categoryDropDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:layout_below="@id/addAssignmentConfirm"/>
+</RelativeLayout>

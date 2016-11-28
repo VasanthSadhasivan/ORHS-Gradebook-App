@@ -8,7 +8,7 @@
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/assignmentName"
         android:layout_width="0dp"
-        android:layout_weight="3"
+        android:layout_weight="7"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textColor="@android:color/white"
@@ -18,7 +18,7 @@
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/assignmentOutOf"
         android:layout_width="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="3"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textColor="@android:color/white"
@@ -28,7 +28,7 @@
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/assignmentPercentage"
         android:layout_width="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="3"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textColor="@android:color/white"
@@ -38,7 +38,7 @@
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/assignmentIsGraded"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textColor="@android:color/white"
@@ -48,18 +48,24 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
-        <Button
+        <ImageButton
             android:id="@+id/addButton"
+            android:background="@drawable/ic_add_circle_white_48dp"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+" />
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            />
 
-        <Button
+        <ImageButton
             android:id="@+id/subtractButton"
+            android:background="@drawable/ic_remove_circle_white_48dp"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-" />
+            android:layout_height="0dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
 </LinearLayout>

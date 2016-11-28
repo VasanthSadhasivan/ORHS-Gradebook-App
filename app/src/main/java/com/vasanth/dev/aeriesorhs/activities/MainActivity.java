@@ -1,5 +1,6 @@
 package com.vasanth.dev.aeriesorhs.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -31,12 +32,18 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public final String TAG = "MainActivity";
     public ArrayList<AsyncTask> asyncTasks = new ArrayList<AsyncTask>();
-
+    public static ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DataStorageAndParsing.setColors();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please Wait..");
+        progressDialog.setMessage("Loading…");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         asyncTasks.add(new PostData());
         asyncTasks.add(new GetData());
         asyncTasks.add(new GetAssignment());

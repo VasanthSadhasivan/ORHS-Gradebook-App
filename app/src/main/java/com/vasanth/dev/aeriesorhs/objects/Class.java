@@ -52,47 +52,6 @@ public class Class {
         tempPercentage=((float)tempWhatYouGot)/((float)tempTotal);
         return tempPercentage;
     }
-    public String getCalculatedGrade(float tempPercentage) {
-        if (tempPercentage<= 10000 && tempPercentage>= 97) {
-            return("A+");
-        }
-        else if (tempPercentage<= 96 && tempPercentage>= 94) {
-            return("A");
-        }
-        else if (tempPercentage<= 93 && tempPercentage>= 90) {
-            return("A-");
-        }
-        else if (tempPercentage<= 89 && tempPercentage>= 87) {
-            return("B+");
-        }
-        else if (tempPercentage<= 86 && tempPercentage>= 83) {
-            return("B");
-        }
-        else if (tempPercentage<= 82 && tempPercentage>= 80) {
-            return("B-");
-        }
-        else if (tempPercentage<= 79 && tempPercentage>= 77) {
-            return("C+");
-        }
-        else if (tempPercentage<= 76 && tempPercentage>= 73) {
-            return("C");
-        }
-        else if (tempPercentage<= 72 && tempPercentage>= 70) {
-            return("C-");
-        }
-        else if (tempPercentage<= 69 && tempPercentage>= 67) {
-            return("D+");
-        }
-        else if (tempPercentage<= 66 && tempPercentage>= 63) {
-            return("D");
-        }
-        else if (tempPercentage<= 62 && tempPercentage>= 60) {
-            return("D-");
-        }
-        else{
-            return("F");
-        }
-    }
     public String getName(){
         return name;
     }
@@ -137,7 +96,6 @@ public class Class {
         }
         return  a;
     }
-
 
     public boolean isWeighted() {
         return weighted;
@@ -194,4 +152,14 @@ public class Class {
         return BigDecimal.valueOf(whatIGot/total*100).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
+    public ArrayList<String> getCategories(){
+        ArrayList<String> categories = new ArrayList<String>();
+        if(weighted) {
+            for (Object key : hashMap.keySet()) {
+                categories.add((String)key);
+            }
+            return categories;
+        }
+        return categories;
+    }
 }

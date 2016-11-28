@@ -1,8 +1,13 @@
 package com.vasanth.dev.aeriesorhs.async;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.vasanth.dev.aeriesorhs.activities.ClassActivity;
+import com.vasanth.dev.aeriesorhs.activities.LoginActivity;
+import com.vasanth.dev.aeriesorhs.activities.MainActivity;
 import com.vasanth.dev.aeriesorhs.helpers.DataStorageAndParsing;
 
 import org.apache.http.HttpResponse;
@@ -27,7 +32,7 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
     public static String TAG = "GetAssignment";
     private final String gradebookDefault = "https://parentportal.eduhsd.k12.ca.us/Aeries.Net/GradebookDetails.aspx";
     public static boolean done = false;
-
+    private Dialog loadingDialog;
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -36,6 +41,7 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        MainActivity.progressDialog.hide();
     }
 
     @Override
