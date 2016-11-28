@@ -29,6 +29,16 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
     public static boolean done = false;
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+    }
+
+    @Override
     protected Void doInBackground(String... params) {
         while (!DataStorageAndParsing.doneLoadingClasses) {
         }

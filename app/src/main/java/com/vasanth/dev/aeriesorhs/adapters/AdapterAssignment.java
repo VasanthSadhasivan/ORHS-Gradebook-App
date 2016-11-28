@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.vasanth.dev.aeriesorhs.R;
+import com.vasanth.dev.aeriesorhs.activities.ClassActivity;
 import com.vasanth.dev.aeriesorhs.objects.Assignment;
 
 import java.util.ArrayList;
@@ -23,14 +25,12 @@ import static android.graphics.Color.GRAY;
 
 public class AdapterAssignment extends BaseAdapter {
     private Activity activity;
-    private ArrayList<Assignment> assignmentArrayList;
     private static LayoutInflater inflater = null;
     private int color;
 
-    public AdapterAssignment(Activity activity, ArrayList<Assignment> assignmentArrayList, int color) {
+    public AdapterAssignment(Activity activity, int color) {
         try {
             this.activity = activity;
-            this.assignmentArrayList = assignmentArrayList;
             this.color = color;
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -41,12 +41,12 @@ public class AdapterAssignment extends BaseAdapter {
     }
 
     public int getCount() {
-        return assignmentArrayList.size();
+        return ((ClassActivity)activity).classMain.getAssignments().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return assignmentArrayList.get(position);
+        return ((ClassActivity)activity).classMain.getAssignments().get(position);
     }
 
     public long getItemId(int position) {
@@ -58,6 +58,9 @@ public class AdapterAssignment extends BaseAdapter {
         public TextView outOf;
         public TextView percentage;
         public TextView graded;
+        public Button add;
+        public Button subtract;
+
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -69,16 +72,50 @@ public class AdapterAssignment extends BaseAdapter {
             holder.outOf = (TextView) convertView.findViewById(R.id.assignmentOutOf);
             holder.percentage = (TextView) convertView.findViewById(R.id.assignmentPercentage);
             holder.graded = (TextView) convertView.findViewById(R.id.assignmentIsGraded);
+            holder.add = (Button) convertView.findViewById(R.id.addButton);
+            holder.subtract = (Button) convertView.findViewById(R.id.subtractButton);
 
             convertView.setTag(holder);
         } else {
             holder = (AdapterAssignment.ViewHolder) convertView.getTag();
         }
         convertView.setBackgroundColor(color);
-        holder.display_name.setText(assignmentArrayList.get(position).getName());
-        holder.outOf.setText(assignmentArrayList.get(position).getWhatYouGot()+"/"+assignmentArrayList.get(position).getTotal());
-        holder.percentage.setText(assignmentArrayList.get(position).getPercentage()*100+"%");
-        if(assignmentArrayList.get(position).isCounted()) {
+        holder.display_name.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getName());
+        holder.outOf.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+"/"+((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
+        holder.percentage.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getPercentage()*100+"%");
+        final View vi = convertView;
+        holder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ClassActivity)activity).classMain.getAssignments().get(position).setWhatYouGot((((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+1));
+                ((ClassActivity)activity).classMain.getAssignments().get(position).setCounted(true);
+                ((ClassActivity)activity).classMain.getAssignments().get(position).setPercentage(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
+                Log.v("AdapterAssignment", "New Percentage is "+(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal()*100f));
+                ((TextView)((ClassActivity)activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity)v.getContext()).classMain.generateCalculatedGrade()));
+                holder.outOf.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+"/"+((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
+                holder.percentage.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getPercentage()*100+"%");
+                holder.graded.setText("Yes");
+                vi.setAlpha(1f);
+                vi.setBackgroundColor(color);
+            }
+        });
+        holder.subtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ClassActivity)activity).classMain.getAssignments().get(position).setWhatYouGot((((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()-1));
+                ((ClassActivity)activity).classMain.getAssignments().get(position).setCounted(true);
+                ((ClassActivity)activity).classMain.getAssignments().get(position).setPercentage(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
+                Log.v("AdapterAssignment", "New Percentage is "+(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal()*100f));
+                ((TextView)((ClassActivity)activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity)v.getContext()).classMain.generateCalculatedGrade()));
+                holder.outOf.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+"/"+((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
+                holder.percentage.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getPercentage()*100+"%");
+                holder.graded.setText("Yes");
+                vi.setAlpha(1f);
+                vi.setBackgroundColor(color);
+            }
+        });
+
+        if(((ClassActivity)activity).classMain.getAssignments().get(position).isCounted()) {
             holder.graded.setText("Yes");
             convertView.setAlpha(1f);
         }
@@ -86,7 +123,6 @@ public class AdapterAssignment extends BaseAdapter {
             holder.graded.setText("No");
             convertView.setBackgroundColor(GRAY);
         }
-        final View vi = convertView;
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
