@@ -1,6 +1,13 @@
 package com.vasanth.dev.aeriesorhs.objects;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static java.lang.Float.NaN;
 
 /**
  * Created by Vasanth Sadhasivan on 5/28/2016.
@@ -14,7 +21,7 @@ public class Class {
     private String dateUpdated;
     private String assignmentLink;
     private boolean weighted = false;
-
+    private HashMap hashMap = new HashMap();
     public Class(){
 
     }
@@ -28,6 +35,9 @@ public class Class {
     }
     public void addAssignment(String name, float whatYouGot, float total, float percentage, boolean isGraded){
         assignments.add(new Assignment(name,whatYouGot,total,percentage,isGraded));
+    }
+    public void addAssignment(String name, float whatYouGot, float total, float percentage, boolean isGraded, String category){
+        assignments.add(new Assignment(name,whatYouGot,total,percentage,isGraded, category));
     }
     public float getCalculatedPercentage(){
         int tempTotal=0;
@@ -136,4 +146,52 @@ public class Class {
     public void setWeighted(boolean weighted) {
         this.weighted = weighted;
     }
+
+    public HashMap getHashMap() {
+        return hashMap;
+    }
+
+    public void setHashMap(HashMap hashMap) {
+        this.hashMap = hashMap;
+    }
+
+    public float generateCalculatedGrade(){
+        if(weighted) {
+            float sumOfGrades = 0;
+            for (Object key : hashMap.keySet()) {
+                float sumOfCategory = 0;
+                float totalInCategory = 0;
+                for (Assignment assignment : assignments) {
+                    if (assignment.isCounted() && assignment.getCategory().equalsIgnoreCase((String) key)) {
+                        sumOfCategory += assignment.getWhatYouGot();
+                        totalInCategory += assignment.getTotal();
+                    }
+                }
+                Log.v("Class", (sumOfCategory / totalInCategory * 100) + " for key " + key);
+                if (totalInCategory > 1)
+                    sumOfGrades += (sumOfCategory / totalInCategory * 100) * (Float) hashMap.get(key) / 100f;
+
+                Log.v("Class", sumOfGrades + ": Sum of Grades");
+            }
+            for (Object key : hashMap.keySet()) {
+                float totalInCategory = 0;
+                for (Assignment assignment : assignments) {
+                    if (assignment.isCounted() && assignment.getCategory().equalsIgnoreCase((String) key))
+                        totalInCategory += assignment.getTotal();
+                }
+                if (totalInCategory < 1)
+                    sumOfGrades = sumOfGrades / (1 - (Float) hashMap.get(key) / 100);
+            }
+            return BigDecimal.valueOf(sumOfGrades).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+        }
+        float total=0;
+        float whatIGot=0;
+        for(Assignment assignment : assignments){
+            total += assignment.getTotal();
+            whatIGot += assignment.getWhatYouGot();
+        }
+
+        return BigDecimal.valueOf(whatIGot/total*100).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+    }
+
 }

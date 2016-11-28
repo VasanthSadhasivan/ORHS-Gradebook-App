@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vasanth.dev.aeriesorhs.R;
 import com.vasanth.dev.aeriesorhs.adapters.AdapterAssignment;
@@ -33,6 +34,7 @@ public class ClassActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int class_index = intent.getIntExtra("class_index", -1);
         classMain = DataStorageAndParsing.classesAsArrayList.get(class_index);
+        changeGrade(classMain.generateCalculatedGrade());
         ((TextView) findViewById(R.id.ClassTitle)).setText(DataStorageAndParsing.classesAsArrayList.get(class_index).getName());
         setColor();
         addAssignmentsNew();
@@ -46,5 +48,9 @@ public class ClassActivity extends AppCompatActivity {
         ListView mainListView = (ListView) findViewById( R.id.assignmentListView );
         AdapterAssignment listAdapter = new AdapterAssignment(this, classMain.getAssignments(), classMain.getColor());
         mainListView.setAdapter( listAdapter );
+    }
+
+    public void changeGrade(float newGrade){
+        ((TextView)findViewById(R.id.ClassGrade)).setText(newGrade+"%");
     }
 }

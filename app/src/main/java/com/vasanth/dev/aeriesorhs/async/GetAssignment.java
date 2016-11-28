@@ -17,6 +17,8 @@ import org.jsoup.select.Elements;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Vasanth Sadhasivan on 5/28/2016.
@@ -38,13 +40,11 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
             Elements links = document.select("a[href]");
             String requestURL = "";
             for (Element link : links) {
-                Log.v(TAG, "URL: " + link.attr("href"));
                 requestURL = "https://parentportal.eduhsd.k12.ca.us/Aeries.Net/" + link.attr("href");
             }
             if (links.size() > 0) {
                 HttpClient client = PostData.httpClient;
                 HttpGet request = new HttpGet(requestURL);
-                Log.v(TAG, "Length of links list: " + links.size());
                 HttpResponse response;
                 try {
                     response = client.execute(request);
@@ -58,31 +58,72 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
                 }
-                if(html_file.contains("Perc&nbsp;of<br>Grade")){
+                if (html_file.contains("Perc&nbsp;of")) {
                     DataStorageAndParsing.classesAsArrayList.get(i).setWeighted(true);
                 }
                 Document doc = Jsoup.parse(html_file);
                 Elements content = doc.getElementsByClass("assignment-info");
                 for (Element a : content) {
-                    Log.w(TAG, a.getAllElements().get(4).text()); //name
-                    Log.w(TAG, a.getAllElements().get(11).text());//pt value
-                    Log.w(TAG, a.getAllElements().get(13).text());//out of
-                    Log.w(TAG, a.getAllElements().get(21).text()); //percentage
-                    Log.w(TAG, a.getAllElements().get(25).text()); //graded?
+                    //Log.w(TAG, a.getAllElements().get(4).text()); //name
+                    //Log.w(TAG, a.getAllElements().get(11).text());//pt value
+                    //Log.w(TAG, a.getAllElements().get(13).text());//out of
+                    //Log.w(TAG, a.getAllElements().get(21).text()); //percentage
+                    //Log.w(TAG, a.getAllElements().get(25).text()); //graded?
                     float x = 0;
                     float y = 0;
                     boolean isGraded = false;
+                    String category = "";
                     try {
+                        if (a.getAllElements().get(25).text().contains("y") || a.getAllElements().get(25).text().contains("Y"))
+                            isGraded = true;
+                        category = a.getAllElements().get(6).text();
                         x = Float.valueOf(a.getAllElements().get(11).text());
                         y = Float.valueOf(a.getAllElements().get(13).text());
-                        if(a.getAllElements().get(25).text().contains("y") || a.getAllElements().get(25).text().contains("Y"))
-                            isGraded = true;
                     } catch (Exception e) {
                         x = 0;
                         y = 0;
                         //e.printStackTrace();
                     }
-                    DataStorageAndParsing.classesAsArrayList.get(i).addAssignment(a.getAllElements().get(4).text(), x, y, x / y, isGraded);
+                    DataStorageAndParsing.classesAsArrayList.get(i).addAssignment(a.getAllElements().get(4).text(), x, y, x / y, isGraded, category);
+                }
+                if (DataStorageAndParsing.classesAsArrayList.get(i).isWeighted()) {
+                    try {
+                        int numberOfCategories = 0;
+                        HashMap hashMap = new HashMap();
+                        ArrayList<Float> percentages = new ArrayList<Float>();
+                        ArrayList<String> categories = new ArrayList<String>();
+                        for (Element element : doc.getAllElements()) {
+                            if (element.id().contains("tdPctOfGrade"))
+                                numberOfCategories++;
+                        }
+                        numberOfCategories--;
+                        int incrementor = 0;
+                        for (Element element : doc.getAllElements()) {
+                            if (element.id().contains("tdPctOfGrade")) {
+                                percentages.add(Float.parseFloat(element.text().substring(0, element.text().length() - 1)));
+                                incrementor++;
+                            }
+                            if (incrementor >= numberOfCategories)
+                                break;
+
+                        }
+                        incrementor = 0;
+                        for (Element element : doc.getAllElements()) {
+                            if (element.id().contains("tdDESC")) {
+                                categories.add(element.text());
+                                incrementor++;
+                            }
+                            if (incrementor >= numberOfCategories)
+                                break;
+                        }
+                        for (int a = 0; a < numberOfCategories; a++) {
+                            hashMap.put(categories.get(a), percentages.get(a));
+                        }
+                        DataStorageAndParsing.classesAsArrayList.get(i).setHashMap(hashMap);
+                    } catch (Exception e) {
+                        Log.e("ERROR", "ERROR");
+                        e.printStackTrace();
+                    }
                 }
             }
             GetAssignment.done = true;

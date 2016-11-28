@@ -58,7 +58,6 @@ public class AdapterClass extends BaseAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-        Log.v("AdapterClass", position+"");
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.class_row, parent, false);
             holder = new ViewHolder();
