@@ -36,6 +36,7 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        done = false;
     }
 
     @Override
@@ -144,6 +145,8 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
             }
             GetAssignment.done = true;
         }
+        Log.v(TAG, "GetAssignment done");
+
         return null;
     }
 

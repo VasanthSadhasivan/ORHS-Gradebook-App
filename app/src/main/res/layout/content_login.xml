@@ -63,4 +63,16 @@
         android:layout_alignParentEnd="true"
         android:background="#464779"
         android:textColor="@android:color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Developed by Vasanth Sadhasivan"
+        android:id="@+id/DevelopedBy"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#8Affffff"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

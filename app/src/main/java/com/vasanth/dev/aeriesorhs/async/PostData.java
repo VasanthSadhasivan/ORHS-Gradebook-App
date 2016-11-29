@@ -29,6 +29,13 @@ public class PostData extends AsyncTask<String, Void, Void> {
     public static boolean finished = false;
     public static String email = "";
     public static String password = "";
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        finished = false;
+    }
+
     protected Void doInBackground(String... urls) {
         HttpPost httpPost = new HttpPost("https://parentportal.eduhsd.k12.ca.us/Aeries.Net/LoginParent.aspx");
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(8);

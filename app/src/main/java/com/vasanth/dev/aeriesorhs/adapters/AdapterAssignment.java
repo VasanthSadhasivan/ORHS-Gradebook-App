@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.vasanth.dev.aeriesorhs.R;
@@ -29,6 +30,7 @@ public class AdapterAssignment extends BaseAdapter {
     private Activity activity;
     private static LayoutInflater inflater = null;
     private int color;
+    private String TAG = "AdapterAssignment";
 
     public AdapterAssignment(Activity activity, int color) {
         try {
@@ -43,12 +45,12 @@ public class AdapterAssignment extends BaseAdapter {
     }
 
     public int getCount() {
-        return ((ClassActivity)activity).classMain.getAssignments().size();
+        return ((ClassActivity) activity).classMain.getAssignments().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return ((ClassActivity)activity).classMain.getAssignments().get(position);
+        return ((ClassActivity) activity).classMain.getAssignments().get(position);
     }
 
     public long getItemId(int position) {
@@ -62,6 +64,7 @@ public class AdapterAssignment extends BaseAdapter {
         public TextView graded;
         public ImageButton add;
         public ImageButton subtract;
+        public SeekBar seekBar;
 
     }
 
@@ -76,26 +79,34 @@ public class AdapterAssignment extends BaseAdapter {
             holder.graded = (TextView) convertView.findViewById(R.id.assignmentIsGraded);
             holder.add = (ImageButton) convertView.findViewById(R.id.addButton);
             holder.subtract = (ImageButton) convertView.findViewById(R.id.subtractButton);
+            holder.seekBar = (SeekBar) convertView.findViewById(R.id.seekBar);
 
             convertView.setTag(holder);
         } else {
             holder = (AdapterAssignment.ViewHolder) convertView.getTag();
         }
         convertView.setBackgroundColor(color);
-        holder.display_name.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getName());
-        holder.outOf.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+"/"+((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
-        holder.percentage.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getPercentage()*100+"%");
+        holder.display_name.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getName());
+        holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
+        holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
+        holder.seekBar.setProgress(0);
+        if(((ClassActivity) activity).classMain.getAssignments().get(position).getTotal()<1f){
+            Log.v(TAG,((ClassActivity) activity).classMain.getAssignments().get(position).getTotal()+"" );
+            holder.seekBar.setVisibility(View.INVISIBLE);
+        }else{
+            holder.seekBar.setVisibility(View.VISIBLE);
+        }
         final View vi = convertView;
         holder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ClassActivity)activity).classMain.getAssignments().get(position).setWhatYouGot((((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+1));
-                ((ClassActivity)activity).classMain.getAssignments().get(position).setCounted(true);
-                ((ClassActivity)activity).classMain.getAssignments().get(position).setPercentage(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
-                Log.v("AdapterAssignment", "New Percentage is "+(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal()*100f));
-                ((TextView)((ClassActivity)activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity)v.getContext()).classMain.generateCalculatedGrade()));
-                holder.outOf.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+"/"+((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
-                holder.percentage.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getPercentage()*100+"%");
+                ((ClassActivity) activity).classMain.getAssignments().get(position).setWhatYouGot((((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + 1));
+                ((ClassActivity) activity).classMain.getAssignments().get(position).setCounted(true);
+                ((ClassActivity) activity).classMain.getAssignments().get(position).setPercentage(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() / ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
+                Log.v("AdapterAssignment", "New Percentage is " + (((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() / ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal() * 100f));
+                ((TextView) ((ClassActivity) activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity) v.getContext()).classMain.generateCalculatedGrade()));
+                holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
+                holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
                 holder.graded.setText("Yes");
                 vi.setAlpha(1f);
                 vi.setBackgroundColor(color);
@@ -104,24 +115,54 @@ public class AdapterAssignment extends BaseAdapter {
         holder.subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ClassActivity)activity).classMain.getAssignments().get(position).setWhatYouGot((((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()-1));
-                ((ClassActivity)activity).classMain.getAssignments().get(position).setCounted(true);
-                ((ClassActivity)activity).classMain.getAssignments().get(position).setPercentage(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
-                Log.v("AdapterAssignment", "New Percentage is "+(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()/((ClassActivity)activity).classMain.getAssignments().get(position).getTotal()*100f));
-                ((TextView)((ClassActivity)activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity)v.getContext()).classMain.generateCalculatedGrade()));
-                holder.outOf.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getWhatYouGot()+"/"+((ClassActivity)activity).classMain.getAssignments().get(position).getTotal());
-                holder.percentage.setText(((ClassActivity)activity).classMain.getAssignments().get(position).getPercentage()*100+"%");
+                ((ClassActivity) activity).classMain.getAssignments().get(position).setWhatYouGot((((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() - 1));
+                ((ClassActivity) activity).classMain.getAssignments().get(position).setCounted(true);
+                ((ClassActivity) activity).classMain.getAssignments().get(position).setPercentage(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() / ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
+                Log.v("AdapterAssignment", "New Percentage is " + (((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() / ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal() * 100f));
+                ((TextView) ((ClassActivity) activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity) v.getContext()).classMain.generateCalculatedGrade()));
+                holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
+                holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
                 holder.graded.setText("Yes");
                 vi.setAlpha(1f);
                 vi.setBackgroundColor(color);
             }
         });
+        holder.seekBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
 
-        if(((ClassActivity)activity).classMain.getAssignments().get(position).isCounted()) {
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        // TODO Auto-generated method stub
+
+                        float percentageProgress = ((float)progress)/((float)seekBar.getMax());
+                        float newWhatYouGot =(int)(((ClassActivity) activity).classMain.getAssignments().get(position).getTotal()*percentageProgress);
+                        Log.v(TAG, "newWhatYouGot: "+newWhatYouGot);
+                        ((ClassActivity) activity).classMain.getAssignments().get(position).setWhatYouGot(newWhatYouGot);
+                        ((ClassActivity) activity).classMain.getAssignments().get(position).setCounted(true);
+                        ((ClassActivity) activity).classMain.getAssignments().get(position).setPercentage(percentageProgress);
+                        ((TextView) ((ClassActivity) activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity) activity).classMain.generateCalculatedGrade()));
+                        holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
+                        holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
+                        holder.graded.setText("Yes");
+                        vi.setAlpha(1f);
+                        vi.setBackgroundColor(color);
+                    }
+                }
+        );
+        if (((ClassActivity) activity).classMain.getAssignments().get(position).isCounted()) {
             holder.graded.setText("Yes");
             convertView.setAlpha(1f);
-        }
-        else {
+        } else {
             holder.graded.setText("No");
             convertView.setBackgroundColor(GRAY);
         }
@@ -135,14 +176,15 @@ public class AdapterAssignment extends BaseAdapter {
         });
         return convertView;
     }
+
     public static int darkenColor(int color, float factor) {
         int a = Color.alpha(color);
         int r = Math.round(Color.red(color) * factor);
         int g = Math.round(Color.green(color) * factor);
         int b = Math.round(Color.blue(color) * factor);
         return Color.argb(a,
-                Math.min(r,255),
-                Math.min(g,255),
-                Math.min(b,255));
+                Math.min(r, 255),
+                Math.min(g, 255),
+                Math.min(b, 255));
     }
 }

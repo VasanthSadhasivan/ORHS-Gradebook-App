@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         done = true;
         Intent mainIntent = new Intent(this, MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mainIntent.putExtra("firstTime", true);
         startActivity(mainIntent);
     }
 

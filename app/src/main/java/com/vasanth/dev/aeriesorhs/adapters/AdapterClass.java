@@ -24,12 +24,11 @@ public class AdapterClass extends BaseAdapter {
     private Activity activity;
     private ArrayList<Class> classArrayList;
     private static LayoutInflater inflater = null;
-
+    private String TAG = "AdapterClass";
     public AdapterClass(Activity activity, ArrayList<Class> _Class) {
         try {
             this.activity = activity;
             this.classArrayList = _Class;
-
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         } catch (Exception e) {

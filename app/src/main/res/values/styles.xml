@@ -12,13 +12,16 @@
     </style>
     <style name="NiceTextView" parent="android:Widget.TextView">
         <item name="android:fontFamily">smallcaps</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
     <style name="NiceButtonView" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily">smallcaps</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="android:textViewStyle">@style/NiceTextView</item>
         <item name="android:buttonStyle">@style/NiceButtonView</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">sans-serif-smallcaps</item>
@@ -27,6 +30,7 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textViewStyle">@style/NiceTextView</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:buttonStyle">@style/NiceButtonView</item>
         <item name="android:fontFamily">sans-serif-smallcaps</item>
     </style>
@@ -34,6 +38,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textViewStyle">@style/NiceTextView</item>
         <item name="android:buttonStyle">@style/NiceButtonView</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:fontFamily">sans-serif-smallcaps</item>
     </style>
 

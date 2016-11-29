@@ -21,6 +21,13 @@ public class GetData extends AsyncTask<String, Void, Void> {
     public static String classes = "";
     public static boolean finished = false;
     private final String TAG = "GetData";
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        finished = false;
+    }
+
     protected Void doInBackground(String... urls) {
         while (PostData.finished == false)
         {

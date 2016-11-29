@@ -33,14 +33,21 @@ public class MainActivity extends AppCompatActivity {
     public final String TAG = "MainActivity";
     public ArrayList<AsyncTask> asyncTasks = new ArrayList<AsyncTask>();
     public static ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(!getIntent().getBooleanExtra("firstTime",false)){
+            addClassButtonsNew();
+            return;
+        }
+
         DataStorageAndParsing.setColors();
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait..");
-        progressDialog.setMessage("Loading…");
+        progressDialog.setMessage("Loading Assignments…");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TAG, "Classes Loading: " + DataStorageAndParsing.classesAsString);
         while (!GetData.finished) {
         }
-        Log.v(TAG, "Classes Loaded");
+        Log.v(TAG, "Classes Loaded, size: "+DataStorageAndParsing.classesAsArrayList.size());
         asyncTasks.get(2).execute(new String[]{});
         Log.v(TAG, "getASsignment.done: " + GetAssignment.done);
         DataStorageAndParsing.createClasses();
@@ -64,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addClassButtonsNew() {
         ListView mainListView = (ListView) findViewById( R.id.mainListView );
+
         AdapterClass listAdapter = new AdapterClass(this, DataStorageAndParsing.classesAsArrayList);
         mainListView.setAdapter( listAdapter );
     }
@@ -80,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         GetData.resetData();
         PostData.resetData();
         LoginActivity.resetData();
+        Intent loginActivity = new Intent(this, LoginActivity.class);
+        startActivity(loginActivity);
     }
-
 }

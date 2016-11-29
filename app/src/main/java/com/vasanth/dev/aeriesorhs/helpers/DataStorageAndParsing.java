@@ -3,6 +3,7 @@ package com.vasanth.dev.aeriesorhs.helpers;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.vasanth.dev.aeriesorhs.objects.Assignment;
 import com.vasanth.dev.aeriesorhs.objects.Class;
 
 import org.json.JSONArray;
@@ -218,6 +219,12 @@ public class DataStorageAndParsing {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        for(int i=0; i< classesAsArrayList.size(); i++)
+        {
+            if(classesAsArrayList.get(i).getName().contains("Unsched")){
+                classesAsArrayList.remove(i);
+            }
         }
         Log.v(TAG, "AddClasses Done");
         doneLoadingClasses = true;

@@ -1,6 +1,7 @@
 package com.vasanth.dev.aeriesorhs.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 
 import com.vasanth.dev.aeriesorhs.R;
 import com.vasanth.dev.aeriesorhs.adapters.AdapterAssignment;
+import com.vasanth.dev.aeriesorhs.async.GetAssignment;
+import com.vasanth.dev.aeriesorhs.async.GetData;
+import com.vasanth.dev.aeriesorhs.async.PostData;
 import com.vasanth.dev.aeriesorhs.helpers.DataStorageAndParsing;
 import com.vasanth.dev.aeriesorhs.objects.Class;
 
@@ -52,5 +56,9 @@ public class ClassActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddAssignmentActivity.class);
         intent.putExtra("class_index", class_index);
         startActivity(intent);
+    }
+    public void onBackPressed() {
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(mainActivityIntent);
     }
 }

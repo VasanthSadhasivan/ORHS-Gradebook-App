@@ -1,49 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_assignment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#315162"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.vasanth.dev.aeriesorhs.activities.AddAssignmentActivity">
-
-    <EditText
-        android:id="@+id/assignmentEditTextName"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Name of New Assignment"
+        android:textColor="#bfffffff"
+        android:text="Add New Assignment"
+        android:textSize="35dp"
         android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-    <EditText
-        android:id="@+id/assignmentWhatIGot"
-        android:hint="200"
+        android:gravity="center"/>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/assignmentEditTextName"/>
-    <EditText
-        android:id="@+id/assignmentTotal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="200"
-        android:layout_below="@+id/assignmentWhatIGot"/>
-    <Button
-        android:id="@+id/addAssignmentConfirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:layout_below="@+id/assignmentTotal"
-        android:onClick="addAssignmentConfirm"/>
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-    <Spinner
-        android:id="@+id/categoryDropDown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        android:layout_below="@id/addAssignmentConfirm"/>
+        <EditText
+            android:id="@+id/assignmentEditTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:hint="Name of New Assignment"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textColorHint="#79ffffff"
+            android:textSize="25dp" />
+        <EditText
+            android:id="@+id/assignmentWhatIGot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/assignmentEditTextName"
+            android:hint="What You Got #"
+            android:textColor="@android:color/white"
+            android:textColorHint="#79ffffff"
+            android:textSize="25dp" />
+        <EditText
+            android:id="@+id/assignmentTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/assignmentWhatIGot"
+            android:hint="Total #"
+            android:textColor="@android:color/white"
+            android:textColorHint="#79ffffff"
+            android:textSize="25dp" />
+
+        <Spinner
+            android:id="@+id/categoryDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/assignmentTotal"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/addAssignmentConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categoryDropDown"
+            android:background="#464779"
+            android:onClick="addAssignmentConfirm"
+            android:text="Submit"
+            android:textColor="@android:color/white" />
+
+
+
+    </RelativeLayout>
 </RelativeLayout>

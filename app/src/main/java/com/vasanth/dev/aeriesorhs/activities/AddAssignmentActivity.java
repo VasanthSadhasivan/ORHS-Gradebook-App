@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.vasanth.dev.aeriesorhs.R;
@@ -20,11 +21,11 @@ public class AddAssignmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_assignment);
         Intent intent = getIntent();
         class_index = intent.getIntExtra("class_index", -1);
-
         dropdown = (Spinner)findViewById(R.id.categoryDropDown);
         String[] items = DataStorageAndParsing.classesAsArrayList.get(class_index).getCategories().toArray(new String[DataStorageAndParsing.classesAsArrayList.get(class_index).getCategories().size()]);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+        getSupportActionBar().hide();
     }
 
     public void addAssignmentConfirm(View view) {
