@@ -107,8 +107,20 @@ public class AdapterAssignment extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 ((ClassActivity) activity).classMain.getAssignments().get(position).revertGrades();
+                holder.revertButton.setVisibility(View.INVISIBLE);
                 holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
                 holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
+                holder.seekBar.setProgress((int)(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage()*holder.seekBar.getMax()));
+                holder.graded.setText("No");
+                vi.setBackgroundColor(GRAY);
+                if(((ClassActivity) activity).classMain.getAssignments().get(position).isCounted()) {
+                    ((ClassActivity) activity).classMain.getAssignments().get(position).setCounted(true);
+                    holder.graded.setText("Yes");
+                    vi.setAlpha(1f);
+                    vi.setBackgroundColor(color);
+                }
+
+                ((TextView) ((ClassActivity) activity).findViewById(R.id.ClassGrade)).setText(Float.toString(((ClassActivity) v.getContext()).classMain.generateCalculatedGrade()));
             }
         });
         holder.add.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +134,7 @@ public class AdapterAssignment extends BaseAdapter {
                 holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
                 holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
                 holder.graded.setText("Yes");
+                holder.revertButton.setVisibility(View.VISIBLE);
                 vi.setAlpha(1f);
                 vi.setBackgroundColor(color);
             }
@@ -139,6 +152,8 @@ public class AdapterAssignment extends BaseAdapter {
                 holder.graded.setText("Yes");
                 vi.setAlpha(1f);
                 vi.setBackgroundColor(color);
+                holder.revertButton.setVisibility(View.VISIBLE);
+
             }
         });
         holder.seekBar.setOnSeekBarChangeListener(
@@ -159,6 +174,7 @@ public class AdapterAssignment extends BaseAdapter {
                         // TODO Auto-generated method stub
                         if(!fromUser)
                             return;
+                        holder.revertButton.setVisibility(View.VISIBLE);
                         float percentageProgress = ((float)progress)/((float)seekBar.getMax());
                         float newWhatYouGot =(int)(((ClassActivity) activity).classMain.getAssignments().get(position).getTotal()*percentageProgress);
                         Log.v(TAG, "newWhatYouGot: "+newWhatYouGot);
@@ -190,16 +206,5 @@ public class AdapterAssignment extends BaseAdapter {
             }
         });
         return convertView;
-    }
-
-    public static int darkenColor(int color, float factor) {
-        int a = Color.alpha(color);
-        int r = Math.round(Color.red(color) * factor);
-        int g = Math.round(Color.green(color) * factor);
-        int b = Math.round(Color.blue(color) * factor);
-        return Color.argb(a,
-                Math.min(r, 255),
-                Math.min(g, 255),
-                Math.min(b, 255));
     }
 }
