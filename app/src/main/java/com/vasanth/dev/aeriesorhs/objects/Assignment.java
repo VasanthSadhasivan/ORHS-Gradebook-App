@@ -12,6 +12,14 @@ public class Assignment {
     private float percentage;
     private boolean counted = true;
     private String category;
+
+    private float originaltotal;
+    private String originalname;
+    private float originalwhatYouGot;
+    private float originalpercentage;
+    private boolean originalcounted = true;
+    private String originalcategory="";
+
     public Assignment(){
 
     }
@@ -21,6 +29,11 @@ public class Assignment {
         this.total=total;
         this.percentage=percentage;
         this.counted=counted;
+        this.originalname=name;
+        this.originalwhatYouGot=whatYouGot;
+        this.originaltotal=total;
+        this.originalpercentage=percentage;
+        this.originalcounted=counted;
     }
     public Assignment(String name, float whatYouGot, float total, float percentage, boolean counted, String category){
         this.name=name;
@@ -29,6 +42,12 @@ public class Assignment {
         this.percentage=percentage;
         this.counted=counted;
         this.category = category;
+        this.originalname=name;
+        this.originalwhatYouGot=whatYouGot;
+        this.originaltotal=total;
+        this.originalpercentage=percentage;
+        this.originalcounted=counted;
+        this.originalcategory = category;
     }
     public void setTotal(float a){
         total = a;
@@ -67,5 +86,32 @@ public class Assignment {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public float getOriginaltotal() {
+        return originaltotal;
+    }
+    public String getOriginalname() {
+        return originalname;
+    }
+    public float getOriginalwhatYouGot() {
+        return originalwhatYouGot;
+    }
+    public float getOriginalpercentage() {
+        return originalpercentage;
+    }
+    public boolean isOriginalcounted() {
+        return originalcounted;
+    }
+    public String getOriginalcategory() {
+        return originalcategory;
+    }
+    public void revertGrades(){
+        this.name=getOriginalname();
+        this.whatYouGot=getOriginalwhatYouGot();
+        this.total=getOriginaltotal();
+        this.percentage=getOriginalpercentage();
+        this.counted=isOriginalcounted();
+        this.category = getOriginalcategory();
     }
 }

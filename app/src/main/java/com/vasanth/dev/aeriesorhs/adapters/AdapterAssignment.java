@@ -3,6 +3,8 @@ package com.vasanth.dev.aeriesorhs.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +18,9 @@ import android.widget.TextView;
 
 import com.vasanth.dev.aeriesorhs.R;
 import com.vasanth.dev.aeriesorhs.activities.ClassActivity;
+import com.vasanth.dev.aeriesorhs.helpers.DataStorageAndParsing;
 import com.vasanth.dev.aeriesorhs.objects.Assignment;
+import com.vasanth.dev.aeriesorhs.objects.Class;
 
 import java.util.ArrayList;
 
@@ -31,9 +35,10 @@ public class AdapterAssignment extends BaseAdapter {
     private static LayoutInflater inflater = null;
     private int color;
     private String TAG = "AdapterAssignment";
-
+    ArrayList<Class> tempClassesAsArrayList;
     public AdapterAssignment(Activity activity, int color) {
         try {
+            this.tempClassesAsArrayList = DataStorageAndParsing.classesAsArrayList;
             this.activity = activity;
             this.color = color;
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -65,6 +70,7 @@ public class AdapterAssignment extends BaseAdapter {
         public ImageButton add;
         public ImageButton subtract;
         public SeekBar seekBar;
+        public ImageButton revertButton;
 
     }
 
@@ -80,16 +86,16 @@ public class AdapterAssignment extends BaseAdapter {
             holder.add = (ImageButton) convertView.findViewById(R.id.addButton);
             holder.subtract = (ImageButton) convertView.findViewById(R.id.subtractButton);
             holder.seekBar = (SeekBar) convertView.findViewById(R.id.seekBar);
-
+            holder.revertButton = (ImageButton) convertView.findViewById(R.id.revertButton);
             convertView.setTag(holder);
         } else {
             holder = (AdapterAssignment.ViewHolder) convertView.getTag();
         }
+        holder.seekBar.setProgress((int)(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage()*holder.seekBar.getMax()));
         convertView.setBackgroundColor(color);
         holder.display_name.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getName());
         holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
         holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
-        holder.seekBar.setProgress(0);
         if(((ClassActivity) activity).classMain.getAssignments().get(position).getTotal()<1f){
             Log.v(TAG,((ClassActivity) activity).classMain.getAssignments().get(position).getTotal()+"" );
             holder.seekBar.setVisibility(View.INVISIBLE);
@@ -97,6 +103,14 @@ public class AdapterAssignment extends BaseAdapter {
             holder.seekBar.setVisibility(View.VISIBLE);
         }
         final View vi = convertView;
+        holder.revertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ClassActivity) activity).classMain.getAssignments().get(position).revertGrades();
+                holder.outOf.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getWhatYouGot() + "/" + ((ClassActivity) activity).classMain.getAssignments().get(position).getTotal());
+                holder.percentage.setText(((ClassActivity) activity).classMain.getAssignments().get(position).getPercentage() * 100 + "%");
+            }
+        });
         holder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +157,8 @@ public class AdapterAssignment extends BaseAdapter {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         // TODO Auto-generated method stub
-
+                        if(!fromUser)
+                            return;
                         float percentageProgress = ((float)progress)/((float)seekBar.getMax());
                         float newWhatYouGot =(int)(((ClassActivity) activity).classMain.getAssignments().get(position).getTotal()*percentageProgress);
                         Log.v(TAG, "newWhatYouGot: "+newWhatYouGot);

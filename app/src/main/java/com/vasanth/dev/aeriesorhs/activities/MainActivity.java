@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         asyncTasks.add(new PostData());
         asyncTasks.add(new GetData());
-        asyncTasks.add(new GetAssignment());
+        asyncTasks.add(new GetAssignment(this.getApplicationContext()));
         asyncTasks.get(0).execute(new String[]{"ayy"});
         asyncTasks.get(1).execute(new String[]{"ayy"});
         Log.v(TAG, "Classes Loading: " + DataStorageAndParsing.classesAsString);

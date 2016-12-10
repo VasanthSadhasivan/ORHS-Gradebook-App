@@ -1,17 +1,17 @@
 package com.vasanth.dev.aeriesorhs.async;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.vasanth.dev.aeriesorhs.activities.ClassActivity;
-import com.vasanth.dev.aeriesorhs.activities.LoginActivity;
 import com.vasanth.dev.aeriesorhs.activities.MainActivity;
 import com.vasanth.dev.aeriesorhs.helpers.DataStorageAndParsing;
+import com.vasanth.dev.aeriesorhs.services.NotificationService;
+import com.vasanth.dev.aeriesorhs.services.NotificationServiceOld;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.jsoup.Jsoup;
@@ -20,7 +20,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +32,11 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
     private final String gradebookDefault = "https://parentportal.eduhsd.k12.ca.us/Aeries.Net/GradebookDetails.aspx";
     public static boolean done = false;
     private Dialog loadingDialog;
+    private Context context;
+
+    public GetAssignment(Context context){
+        this.context = context;
+    }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -146,7 +150,7 @@ public class GetAssignment extends AsyncTask<String, Void, Void> {
             GetAssignment.done = true;
         }
         Log.v(TAG, "GetAssignment done");
-
+        context.startService(new Intent(context, NotificationService.class));
         return null;
     }
 
