@@ -9,7 +9,6 @@ import android.util.Log;
 import com.vasanth.dev.aeriesorhs.activities.MainActivity;
 import com.vasanth.dev.aeriesorhs.helpers.DataStorageAndParsing;
 import com.vasanth.dev.aeriesorhs.services.NotificationService;
-import com.vasanth.dev.aeriesorhs.services.NotificationServiceOld;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
